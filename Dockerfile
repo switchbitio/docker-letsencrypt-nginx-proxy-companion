@@ -22,4 +22,12 @@ RUN chmod +rx /app/install_simp_le.sh && sync && /app/install_simp_le.sh && rm -
 ENTRYPOINT ["/bin/bash", "/app/entrypoint.sh" ]
 CMD ["/bin/bash", "/app/start.sh" ]
 
+# From https://github.com/gliderlabs/docker-alpine/blob/master/docs/usage.md#example
+RUN apk add --update \
+    python \
+    py-pip \
+  && pip install virtualenv \
+  && pip install docker-cloud \
+  && rm -rf /var/cache/apk/*
+
 COPY /app/ /app/

@@ -1,7 +1,16 @@
-[![](https://images.microbadger.com/badges/version/jrcs/letsencrypt-nginx-proxy-companion.svg)](https://hub.docker.com/r/jrcs/letsencrypt-nginx-proxy-companion "Click to view the image on Docker Hub")
-[![](https://images.microbadger.com/badges/image/jrcs/letsencrypt-nginx-proxy-companion.svg)](https://hub.docker.com/r/jrcs/letsencrypt-nginx-proxy-companion "Click to view the image on Docker Hub")
-[![](https://img.shields.io/docker/stars/jrcs/letsencrypt-nginx-proxy-companion.svg)](https://hub.docker.com/r/jrcs/letsencrypt-nginx-proxy-companion "Click to view the image on Docker Hub")
-[![](https://img.shields.io/docker/pulls/jrcs/letsencrypt-nginx-proxy-companion.svg)](https://hub.docker.com/r/jrcs/letsencrypt-nginx-proxy-companion "Click to view the image on Docker Hub")
+# Docker Cloud Support
+
+This fork adds Docker Cloud support to `docker-letsencrypt-nginx-proxy-companion`.
+
+The only differences are in [`functions.sh`](app/functions.sh) to the `reload_nginx()`
+function where the [`docker_kill`](https://github.com/JrCs/docker-letsencrypt-nginx-proxy-companion/blob/master/app/functions.sh#L75) function call is replaced by the use of the `docker-cloud` CLI to redeploy
+the Service referenced by `NGINX_DOCKER_GEN_CONTAINER`. In using the `docker-cloud`
+CLI, we need to add it to the `docker-letsencrypt-nginx-proxy-companion` image
+via the `Dockerfile`.
+
+See [this](https://blog.switchbit.io/developing-a-ghost-theme-with-gulp-part-5/) blog post for more context.
+
+---
 
 letsencrypt-nginx-proxy-companion is a lightweight companion container for the [nginx-proxy](https://github.com/jwilder/nginx-proxy). It allow the creation/renewal of Let's Encrypt certificates automatically. See [Let's Encrypt section](#lets-encrypt) for configuration details.
 

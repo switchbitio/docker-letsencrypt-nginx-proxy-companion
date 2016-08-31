@@ -71,8 +71,9 @@ function docker_kill {
 reload_nginx() {
     if [[ -n "${NGINX_DOCKER_GEN_CONTAINER:-}" ]]; then
         # Using docker-gen separate container
-        echo "Reloading nginx proxy (using separate container ${NGINX_DOCKER_GEN_CONTAINER})..."
-        docker_kill "$NGINX_DOCKER_GEN_CONTAINER" SIGHUP
+        echo "Redeploying nginx proxy (using separate container ${NGINX_DOCKER_GEN_CONTAINER})..."
+        docker_gen_service=`docker-cloud service ps --status Running | grep "^${NGINX_DOCKER_GEN_CONTAINER}" | awk '{print $2}'`
+        docker-cloud service redeploy --sync $docker_gen_service
     else
         if [[ -n "${NGINX_PROXY_CONTAINER:-}" ]]; then
             echo "Reloading nginx proxy..."
